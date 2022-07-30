@@ -60,12 +60,22 @@ if __name__ == "__main__":
     country_name_1,no_of_vaccine_1,country_name_dov_1,vaccinated_1 = stuff("AUS")
     country_name_2,no_of_vaccine_2,country_name_dov_2,vaccinated_2 = stuff("IND")
     country_name_3,no_of_vaccine_3,country_name_dov_3,vaccinated_3 = stuff("USA")
-    columns = ["CountryName","VaccinationType","No. of Vaccinations","% Vaccinated"]
-    data = [(f"{country_name_1}",f"{country_name_dov_1}",f"{no_of_vaccine_1}",f"{vaccinated_1}"),
-            (f"{country_name_2}",f"{country_name_dov_2}",f"{no_of_vaccine_2}",f"{vaccinated_2}"),
-            (f"{country_name_3}",f"{country_name_dov_3}",f"{no_of_vaccine_3}",f"{vaccinated_3}")]
-    rdd = spark.sparkContext.parallelize(data)
-    result_df = rdd.toDF(columns)
+    columns_1 = ["CountryName","VaccinationType","No. of Vaccinations"]
+    columns_2 = ["CountryName",'% Vaccinated']
+    data_1 = [(f"{country_name_1}",f"{country_name_dov_1}",f"{no_of_vaccine_1}"),
+            (f"{country_name_2}",f"{country_name_dov_2}",f"{no_of_vaccine_2}"),
+            (f"{country_name_3}",f"{country_name_dov_3}",f"{no_of_vaccine_3}")]
+    data_2 = [(f"{country_name_1}",f"{vaccinated_1}"),
+            (f"{country_name_2}",f"{vaccinated_2}"),
+            (f"{country_name_3}",f"{vaccinated_3}")]
+    rdd_1 = spark.sparkContext.parallelize(data_1)
+    result_df_1 = rdd_1.toDF(columns_1)
 
-    # Saving output in .csv
-    result_df.toPandas().to_csv("result/FinalOutput.csv")
+    rdd_2 = spark.sparkContext.parallelize(data_2)
+    result_df_2 = rdd_1.toDF(columns_2)
+
+    # Creating Metric_1.csv
+    result_df_1.toPandas().to_csv("result/Metric1.csv")
+
+    # Creating Metric_2.csv
+    result_df_2.toPandas().to_csv("result/Metric2.csv")
