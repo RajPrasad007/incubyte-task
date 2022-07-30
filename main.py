@@ -68,14 +68,19 @@ if __name__ == "__main__":
     data_2 = [(f"{country_name_1}",f"{vaccinated_1}"),
             (f"{country_name_2}",f"{vaccinated_2}"),
             (f"{country_name_3}",f"{vaccinated_3}")]
+    
+    print("\033[92m[!]\033[0m Wait, Creating Metric 1")
     rdd_1 = spark.sparkContext.parallelize(data_1)
     result_df_1 = rdd_1.toDF(columns_1)
 
+    print("\033[92m[!]\033[0m Wait, Creating Metric 2")
     rdd_2 = spark.sparkContext.parallelize(data_2)
-    result_df_2 = rdd_1.toDF(columns_2)
+    result_df_2 = rdd_2.toDF(columns_2)
 
     # Creating Metric_1.csv
     result_df_1.toPandas().to_csv("result/Metric1.csv")
 
     # Creating Metric_2.csv
     result_df_2.toPandas().to_csv("result/Metric2.csv")
+
+    print("\033[92m[+]\033[0m Done, Please look inside the result directory!")
